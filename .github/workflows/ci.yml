@@ -53,11 +53,11 @@ jobs:
         with:
           context: ./backend
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/docker-backend:latest
+          tags: ghcr.io/ibrahimatoubeh/docker-backend:latest
 
       - name: Build and Push Frontend
         uses: docker/build-push-action@v5
         with:
           context: ./frontend
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/docker-frontend:latest
+          tags: ghcr.io/ibrahimatoubeh/docker-frontend:latest
