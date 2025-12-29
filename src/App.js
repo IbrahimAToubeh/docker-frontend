@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./App.css";
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3002';
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:3002";
 
 function App() {
   const [tasks, setTasks] = useState([]);
-  const [newTask, setNewTask] = useState({ title: '', description: '' });
+  const [newTask, setNewTask] = useState({ title: "", description: "" });
   const [loading, setLoading] = useState(true);
 
-  // Fetch tasks from API
   useEffect(() => {
     fetchTasks();
   }, []);
@@ -20,7 +19,7 @@ function App() {
       setTasks(response.data);
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching tasks:', error);
+      console.error("edited Error fetching tasks:", error);
       setLoading(false);
     }
   };
@@ -32,27 +31,29 @@ function App() {
     try {
       const response = await axios.post(`${API_URL}/api/tasks`, newTask);
       setTasks([response.data, ...tasks]);
-      setNewTask({ title: '', description: '' });
+      setNewTask({ title: "", description: "" });
     } catch (error) {
-      console.error('Error adding task:', error);
+      console.error("Error adding task:", error);
     }
   };
 
   const toggleTask = async (id, completed) => {
     try {
-      const response = await axios.put(`${API_URL}/api/tasks/${id}`, { completed: !completed });
-      setTasks(tasks.map(task => task.id === id ? response.data : task));
+      const response = await axios.put(`${API_URL}/api/tasks/${id}`, {
+        completed: !completed,
+      });
+      setTasks(tasks.map((task) => (task.id === id ? response.data : task)));
     } catch (error) {
-      console.error('Error updating task:', error);
+      console.error("Error updating task:", error);
     }
   };
 
   const deleteTask = async (id) => {
     try {
       await axios.delete(`${API_URL}/api/tasks/${id}`);
-      setTasks(tasks.filter(task => task.id !== id));
+      setTasks(tasks.filter((task) => task.id !== id));
     } catch (error) {
-      console.error('Error deleting task:', error);
+      console.error("Error deleting task:", error);
     }
   };
 
@@ -74,13 +75,17 @@ function App() {
               type="text"
               placeholder="Task title..."
               value={newTask.title}
-              onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
+              onChange={(e) =>
+                setNewTask({ ...newTask, title: e.target.value })
+              }
               className="input-field"
             />
             <textarea
               placeholder="Description (optional)..."
               value={newTask.description}
-              onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
+              onChange={(e) =>
+                setNewTask({ ...newTask, description: e.target.value })
+              }
               className="textarea-field"
               rows="2"
             />
@@ -92,15 +97,18 @@ function App() {
 
         <div className="tasks-section">
           <h2>Tasks ({tasks.length})</h2>
-          
+
           {tasks.length === 0 ? (
             <div className="empty-state">
               <p>🎉 No tasks yet! Add one above to get started.</p>
             </div>
           ) : (
             <div className="tasks-list">
-              {tasks.map(task => (
-                <div key={task.id} className={`task-card ${task.completed ? 'completed' : ''}`}>
+              {tasks.map((task) => (
+                <div
+                  key={task.id}
+                  className={`task-card ${task.completed ? "completed" : ""}`}
+                >
                   <div className="task-content">
                     <h3 className="task-title">{task.title}</h3>
                     {task.description && (
@@ -113,9 +121,11 @@ function App() {
                   <div className="task-actions">
                     <button
                       onClick={() => toggleTask(task.id, task.completed)}
-                      className={`toggle-btn ${task.completed ? 'completed' : ''}`}
+                      className={`toggle-btn ${
+                        task.completed ? "completed" : ""
+                      }`}
                     >
-                      {task.completed ? '✅' : '⏳'}
+                      {task.completed ? "✅" : "⏳"}
                     </button>
                     <button
                       onClick={() => deleteTask(task.id)}
