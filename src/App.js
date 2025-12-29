@@ -19,7 +19,7 @@ function App() {
       setTasks(response.data);
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching tasks:", error);
+      console.error("edited Error fetching tasks:", error);
       setLoading(false);
     }
   };
